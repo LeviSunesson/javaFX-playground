@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,10 +15,12 @@ public class redmiddle extends Application{
 
 	Scene scene;
 
+	public static int direction = 10;
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		scene = upg6();
+		scene = upg8();
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -131,12 +136,12 @@ public class redmiddle extends Application{
 		Scene scene = new Scene(root, 500, 500);
 
 		int size = 50;
-		
+
 		Circle rect = new Circle(0, 0, size);
 
 		rect.setTranslateX(scene.getWidth()/2);
 		rect.setTranslateY(scene.getHeight()/2);
-		
+
 		scene.setOnKeyPressed( event->{
 
 			if ( event.getCode() == KeyCode.W && !(rect.getTranslateY() < 0)) {
@@ -159,19 +164,79 @@ public class redmiddle extends Application{
 		return scene;
 
 	}
-	
+
 	public Scene upg7() {
-		
+
 		//Skapa och visa en Scene med en triangel som börjar på ett random ställe och faller till marken.
-		
+
 		Group root = new Group();
 		Scene scene = new Scene(root, 500, 500);
 
-		Polygon tri = new Polygon(0, 0, 100);
-	
-		
-		
+		Polygon tri = new Polygon(0, 100, 100, 100, 50, 50);
+		tri.setTranslateX(scene.getHeight()*Math.random());
+		tri.setTranslateY(scene.getHeight()*Math.random());
+		tri.setFill(Color.RED);
 
+		new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+
+				if (!(tri.getTranslateY() > scene.getHeight()-100)) {
+					tri.setTranslateY(tri.getTranslateY()+15);
+				}
+
+			}
+		}.start();
+
+		root.getChildren().add(tri);
+		return scene;
+
+	}
+
+	public Scene upg8() {
+		//Skapa och visa en Scene med en stutsande cirkel som kan flyttas i sidled och inte kan gå utanför din Scene.
+
+		Group root = new Group();
+		Scene scene = new Scene(root, 500, 500);
+
+		int size = 10;
+
+		Circle ball = new Circle(0, 0, size);
+		ball.setTranslateX(scene.getHeight()*(int) (Math.random()));
+		ball.setTranslateY(scene.getHeight()*(int) (Math.random()));
+		ball.setFill(Color.RED);
+
+		new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+
+				if (!(ball.getTranslateY() > scene.getHeight()-size)) {
+					ball.setTranslateY(ball.getTranslateY()+direction);
+				}
+
+				if(ball.getTranslateY() == scene.getHeight() || ball.getTranslateY() == 0) {
+
+					ball.setTranslateY(ball.getTranslateY()-direction);
+
+					direction *= -1;
+
+				}
+
+			}
+		}.start();
+
+		scene.setOnKeyPressed( event->{
+
+			if ( event.getCode() == KeyCode.D && !(ball.getTranslateX() > scene.getWidth()-size)) {
+				ball.setTranslateX(ball.getTranslateX()+15);
+			}
+			if ( event.getCode() == KeyCode.A && !(ball.getTranslateX() < size)) {
+				ball.setTranslateX(ball.getTranslateX()-15);
+			}			
+
+		});
+
+		root.getChildren().add(ball);
 		return scene;
 		
 	}
