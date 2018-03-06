@@ -1,10 +1,11 @@
+import java.util.ArrayList;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,6 +22,8 @@ public class redmiddle extends Application{
 	public Stage primaryStage;
 	public static int direction = 10;
 
+	public ArrayList<KeyCode> keys = new ArrayList<KeyCode>();
+
 	public static int intAnswer = 0;
 
 	public static boolean restart = false;
@@ -36,56 +39,89 @@ public class redmiddle extends Application{
 		question.setTranslateX(10);
 		question.setTranslateY(10);
 
-		TextField answer = new TextField();
-		answer.setTranslateX(10);
-		answer.setTranslateY(50);
+		Button button1 = new Button("uppgift 1");
+		button1.setTranslateX(000);
+		button1.setTranslateY(50);
 
-		Button button = new Button("submit");
-		button.setTranslateX(200);
-		button.setTranslateY(50);
+		Button button2 = new Button("uppgift 2");
+		button2.setTranslateX(100);
+		button2.setTranslateY(50);
 
-		root.getChildren().add(button);
-		root.getChildren().add(answer);
+		Button button3 = new Button("uppgift 3");
+		button3.setTranslateX(200);
+		button3.setTranslateY(50);
+
+		Button button4 = new Button("uppgift 4");
+		button4.setTranslateX(300);
+		button4.setTranslateY(50);
+
+		Button button5 = new Button("uppgift 5");
+		button5.setTranslateX(000);
+		button5.setTranslateY(100);
+		
+		Button button6 = new Button("uppgift 6");
+		button6.setTranslateX(100);
+		button6.setTranslateY(100);
+
+		Button button7 = new Button("uppgift 7");
+		button7.setTranslateX(200);
+		button7.setTranslateY(100);
+
+		Button button8 = new Button("uppgift 8");
+		button8.setTranslateX(300);
+		button8.setTranslateY(100);
+
+		root.getChildren().addAll(button1, button2, button3, button4, button5, button6, button7, button8);
 		root.getChildren().add(question);
 
-		button.setOnAction(action -> {
-			String ans = answer.getText();
+		button1.setOnAction(action -> {
+			scene = upg1();
+			primaryStage.setScene(scene);
+			primaryStage.show();
 
-			if (ans.equals("1")) {
-				scene = upg1();
-				primaryStage.setScene(scene);
-				primaryStage.show();
-			}else if (ans.equals("2")) {
-				scene = upg2();
-				primaryStage.setScene(scene);
-				primaryStage.show();
-			}else if (ans.equals("3")) {
-				scene = upg3();
-				primaryStage.setScene(scene);
-				primaryStage.show();
-			}else if (ans.equals("4")) {
-				scene = upg4();
-				primaryStage.setScene(scene);
-				primaryStage.show();
-			}else if (ans.equals("5")) {
-				scene = upg5();
-				primaryStage.setScene(scene);
-				primaryStage.show();
-			}else if (ans.equals("6")) {
-				scene = upg6();
-				primaryStage.setScene(scene);
-				primaryStage.show();
-			}else if (ans.equals("7")) {
-				scene = upg7();
-				primaryStage.setScene(scene);
-				primaryStage.show();
-			}else if (ans.equals("8")) {
-				scene = upg8();
-				primaryStage.setScene(scene);
-				primaryStage.show();
-			}
 		});
-			
+		button2.setOnAction(action -> {
+			scene = upg2();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+
+		});
+		button3.setOnAction(action -> {
+			scene = upg3();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+
+		});
+		button4.setOnAction(action -> {
+			scene = upg4();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+
+		});
+		button5.setOnAction(action -> {
+			scene = upg5();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+
+		});
+		button6.setOnAction(action -> {
+			scene = upg6();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+
+		});
+		button7.setOnAction(action -> {
+			scene = upg7();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+
+		});
+		button8.setOnAction(action -> {
+			scene = upg8();
+			primaryStage.setScene(scene);
+			primaryStage.show();
+
+		});
 
 	}
 
@@ -111,7 +147,7 @@ public class redmiddle extends Application{
 		if (restart) {
 			return startUp;
 		}
-		
+
 		return scene;
 
 	}
@@ -140,7 +176,7 @@ public class redmiddle extends Application{
 		if (restart) {
 			return startUp;
 		}
-		
+
 		return scene;
 
 	}
@@ -177,7 +213,7 @@ public class redmiddle extends Application{
 		if (restart) {
 			return startUp;
 		}
-		
+
 		return scene;
 
 	}
@@ -212,7 +248,7 @@ public class redmiddle extends Application{
 		if (restart) {
 			return startUp;
 		}
-		
+
 		return scene;
 
 	}
@@ -258,7 +294,7 @@ public class redmiddle extends Application{
 		if (restart) {
 			return startUp;
 		}
-		
+
 		return scene;
 
 	}
@@ -307,7 +343,7 @@ public class redmiddle extends Application{
 		if (restart) {
 			return startUp;
 		}
-		
+
 		return scene;
 
 	}
@@ -320,8 +356,8 @@ public class redmiddle extends Application{
 		Scene scene = new Scene(root, 500, 500);
 
 		Polygon tri = new Polygon(0, 100, 100, 100, 50, 50);
-		tri.setTranslateX(scene.getHeight()*Math.random());
-		tri.setTranslateY(scene.getHeight()*Math.random());
+		tri.setTranslateX((scene.getWidth()-100)*Math.random());
+		tri.setTranslateY((scene.getHeight()/2)*Math.random());
 		tri.setFill(Color.RED);
 
 		new AnimationTimer() {
@@ -351,7 +387,7 @@ public class redmiddle extends Application{
 			System.out.println("success");
 			return startUp;
 		}
-		
+
 		return scene;
 
 	}
@@ -385,19 +421,39 @@ public class redmiddle extends Application{
 
 				}
 
+				for (int i = 0; i < keys.size(); i++) {
+					if ( keys.get(i) == KeyCode.D && !(ball.getTranslateX() > scene.getWidth()-size)) {
+						ball.setTranslateX(ball.getTranslateX()+15);
+
+						System.out.println(keys);
+
+					}
+					if ( keys.get(i) == KeyCode.A && !(ball.getTranslateX() < size)) {
+						ball.setTranslateX(ball.getTranslateX()-15);
+
+						System.out.println(keys);
+					}	
+				}
+
+
 			}
 		}.start();
 
 		scene.setOnKeyPressed( event->{
 
-			if ( event.getCode() == KeyCode.D && !(ball.getTranslateX() > scene.getWidth()-size)) {
-				ball.setTranslateX(ball.getTranslateX()+15);
-			}
-			if ( event.getCode() == KeyCode.A && !(ball.getTranslateX() < size)) {
-				ball.setTranslateX(ball.getTranslateX()-15);
-			}			
+			if (!(keys.contains(event.getCode()))) {
+				keys.add(event.getCode());	
+			}	
 
 		});
+
+		scene.setOnKeyReleased( event->{
+
+			keys.remove(event.getCode());			
+
+		});
+
+
 
 		root.getChildren().add(ball);
 
@@ -414,7 +470,7 @@ public class redmiddle extends Application{
 		if (restart) {
 			return startUp;
 		}
-		
+
 		return scene;
 
 	}
