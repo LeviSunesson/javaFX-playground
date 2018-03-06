@@ -1,9 +1,10 @@
-import java.util.ArrayList;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -15,15 +16,76 @@ public class redmiddle extends Application{
 
 	Scene scene;
 
+	Group root = new Group();
+	Scene startUp = new Scene(root, 500, 500);
+	public Stage primaryStage;
 	public static int direction = 10;
+
+	public static int intAnswer = 0;
+
+	public static boolean restart = false;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		scene = upg8();
-
-		primaryStage.setScene(scene);
+		this.primaryStage = primaryStage;
+		primaryStage.setScene(startUp);	
 		primaryStage.show();
+
+		Label question = new Label("Vilken uppgift? ( 1 - 8 ) ");
+		question.setTranslateX(10);
+		question.setTranslateY(10);
+
+		TextField answer = new TextField();
+		answer.setTranslateX(10);
+		answer.setTranslateY(50);
+
+		Button button = new Button("submit");
+		button.setTranslateX(200);
+		button.setTranslateY(50);
+
+		root.getChildren().add(button);
+		root.getChildren().add(answer);
+		root.getChildren().add(question);
+
+		button.setOnAction(action -> {
+			String ans = answer.getText();
+
+			if (ans.equals("1")) {
+				scene = upg1();
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			}else if (ans.equals("2")) {
+				scene = upg2();
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			}else if (ans.equals("3")) {
+				scene = upg3();
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			}else if (ans.equals("4")) {
+				scene = upg4();
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			}else if (ans.equals("5")) {
+				scene = upg5();
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			}else if (ans.equals("6")) {
+				scene = upg6();
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			}else if (ans.equals("7")) {
+				scene = upg7();
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			}else if (ans.equals("8")) {
+				scene = upg8();
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			}
+		});
+			
 
 	}
 
@@ -36,6 +98,20 @@ public class redmiddle extends Application{
 		cir.setFill(Color.RED);
 		root.getChildren().add(cir);
 
+		Button button = new Button("back");
+		button.setTranslateX(10);
+		button.setTranslateY(10);
+
+		button.setOnAction(action -> {
+			this.primaryStage.setScene(startUp);
+		});
+
+		root.getChildren().add(button);
+
+		if (restart) {
+			return startUp;
+		}
+		
 		return scene;
 
 	}
@@ -51,6 +127,20 @@ public class redmiddle extends Application{
 			root.getChildren().add(cir);
 		}
 
+		Button button = new Button("back");
+		button.setTranslateX(10);
+		button.setTranslateY(10);
+
+		button.setOnAction(action -> {
+			this.primaryStage.setScene(startUp);
+		});
+
+		root.getChildren().add(button);
+
+		if (restart) {
+			return startUp;
+		}
+		
 		return scene;
 
 	}
@@ -73,6 +163,21 @@ public class redmiddle extends Application{
 		rect2.setFill(Color.PURPLE);
 
 		root.getChildren().addAll(rect1,rect2,rect3,rect4);
+
+		Button button = new Button("back");
+		button.setTranslateX(10);
+		button.setTranslateY(10);
+
+		button.setOnAction(action -> {
+			this.primaryStage.setScene(startUp);
+		});
+
+		root.getChildren().add(button);
+
+		if (restart) {
+			return startUp;
+		}
+		
 		return scene;
 
 	}
@@ -94,6 +199,20 @@ public class redmiddle extends Application{
 
 		root.getChildren().addAll(rect1,rect2,rect3,rect4);
 
+		Button button = new Button("back");
+		button.setTranslateX(10);
+		button.setTranslateY(10);
+
+		button.setOnAction(action -> {
+			this.primaryStage.setScene(startUp);
+		});
+
+		root.getChildren().add(button);
+
+		if (restart) {
+			return startUp;
+		}
+		
 		return scene;
 
 	}
@@ -126,6 +245,20 @@ public class redmiddle extends Application{
 
 		root.getChildren().add(rect);
 
+		Button button = new Button("back");
+		button.setTranslateX(10);
+		button.setTranslateY(10);
+
+		button.setOnAction(action -> {
+			this.primaryStage.setScene(startUp);
+		});
+
+		root.getChildren().add(button);
+
+		if (restart) {
+			return startUp;
+		}
+		
 		return scene;
 
 	}
@@ -161,6 +294,20 @@ public class redmiddle extends Application{
 
 		root.getChildren().add(rect);
 
+		Button button = new Button("back");
+		button.setTranslateX(10);
+		button.setTranslateY(10);
+
+		button.setOnAction(action -> {
+			this.primaryStage.setScene(startUp);
+		});
+
+		root.getChildren().add(button);
+
+		if (restart) {
+			return startUp;
+		}
+		
 		return scene;
 
 	}
@@ -189,6 +336,22 @@ public class redmiddle extends Application{
 		}.start();
 
 		root.getChildren().add(tri);
+
+		Button button = new Button("back");
+		button.setTranslateX(10);
+		button.setTranslateY(10);
+
+		button.setOnAction(action -> {
+			this.primaryStage.setScene(startUp);
+		});
+
+		root.getChildren().add(button);
+
+		if (restart) {
+			System.out.println("success");
+			return startUp;
+		}
+		
 		return scene;
 
 	}
@@ -237,8 +400,23 @@ public class redmiddle extends Application{
 		});
 
 		root.getChildren().add(ball);
-		return scene;
+
+		Button button = new Button("back");
+		button.setTranslateX(10);
+		button.setTranslateY(10);
+
+		button.setOnAction(action -> {
+			this.primaryStage.setScene(startUp);
+		});
+
+		root.getChildren().add(button);
+
+		if (restart) {
+			return startUp;
+		}
 		
+		return scene;
+
 	}
 
 	public static void main(String[] args) {
