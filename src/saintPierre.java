@@ -1,7 +1,6 @@
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
@@ -77,7 +76,7 @@ public class saintPierre extends Application{
 		Rectangle rect2 = new Rectangle(0, 200, 200, 200);
 		rect2.setFill(Color.WHITE);
 
-		int scale = 10;
+		double scale = 1.5;
 
 		Line top = new Line(10*scale, 0*scale, 10*scale, 9*scale);
 		Line left = new Line(0*scale, 10*scale, 9*scale, 10*scale);
