@@ -3,11 +3,15 @@ import javafx.scene.shape.Circle;
 
 public class BounceBall extends Circle{
 
+	double x, y;
+	
 	double angle = Math.random()*90+45;
 	double speed = 10;
 	
 	double xspeed;
 	double yspeed;
+	
+	double gravity = 0.2;
 	
 	BounceBall(){
 		this.setRadius(Math.random()*25 + 25);
@@ -16,9 +20,12 @@ public class BounceBall extends Circle{
 		int g = (int)(Math.random()*255);
 		int b = (int)(Math.random()*255);
 		
-		this.setFill(Color.rgb(r, g, b, 0.8));
-		
+		//this.setFill(Color.rgb(r, g, b, 0.8));
+		this.setFill(Color.RED);
+		this.setOpacity(0.8);
 		this.setTranslateX(Math.random()*BounceCort.WIDTH);
+		this.setTranslateY(Math.random()*BounceCort.HEIGHT/2);
+		
 		this.setRotate(angle);
 		
 	}
@@ -26,6 +33,9 @@ public class BounceBall extends Circle{
 	public void update() {
 		edges();
 		fall();
+		
+		//this.setTranslateX(x);
+		//this.setTranslateY(y);
 		
 	}
 	

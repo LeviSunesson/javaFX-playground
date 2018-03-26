@@ -35,6 +35,42 @@ public class Pong extends Application {
 
 	Label leftS = new Label("" + leftScore);
 	Label rightS = new Label("" + rightScore);
+	
+	private AnimationTimer anitimer = new AnimationTimer() {
+
+		@Override
+		public void handle(long now) {
+			textUpdate();
+
+			puck.checkPaddleRight(right);
+			puck.checkPaddleLeft(left);
+
+			puck.update();
+			puck.edges();
+
+			left.update();
+			right.update();
+
+			move();
+
+			if (leftScore == 2) {
+				SCENE = endScene(1);
+				primaryStage.setScene(SCENE);
+				primaryStage.show();
+
+				return;
+			}
+			if (rightScore == 2) {
+				SCENE = endScene(2);
+				primaryStage.setScene(SCENE);
+				primaryStage.show();
+
+				return;
+
+			}
+		}
+		
+	};
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -112,42 +148,8 @@ public class Pong extends Application {
 		root.getChildren().addAll(puck, left, right, leftS, rightS);
 
 		puck.reset();
-
-		new AnimationTimer() {
-			@Override
-			public void handle(long now) {
-
-				textUpdate();
-
-				puck.checkPaddleRight(right);
-				puck.checkPaddleLeft(left);
-
-				puck.update();
-				puck.edges();
-
-				left.update();
-				right.update();
-
-				move();
-
-				if (leftScore == 2) {
-					SCENE = endScene(1);
-					primaryStage.setScene(SCENE);
-					primaryStage.show();
-
-					return;
-				}
-				if (rightScore == 2) {
-					SCENE = endScene(2);
-					primaryStage.setScene(SCENE);
-					primaryStage.show();
-
-					return;
-
-				}
-
-			}
-		}.start();
+		
+		anitimer.start();
 
 		scene.setOnKeyPressed( event->{
 
@@ -163,13 +165,16 @@ public class Pong extends Application {
 
 		});
 
-
 		return scene;
 
 	}
-
+	
 	private Scene endScene(int player) {
 
+		keys.clear();
+		
+		anitimer.stop();
+		
 		puck.xspeed = 0;
 		puck.yspeed = 0;
 		
@@ -182,7 +187,7 @@ public class Pong extends Application {
 		Group root = new Group();
 		Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
 
-		Label prompt = new Label("Player " + 1 + " Won!");
+		Label prompt = new Label("Player " + player + " Won!");
 
 		prompt.setMinWidth(100);
 		prompt.setMaxWidth(100);

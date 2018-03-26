@@ -1,12 +1,14 @@
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 
-public class Rocket extends Group{
+public class Rocket extends Group {
 
-	double x = rocketStart.WINDOW_WIDTH/2;
+	double x = rocketStart.WINDOW_WIDTH / 4;
 
-	double y = rocketStart.WINDOW_HEIGHT/2;
+	double y = rocketStart.WINDOW_HEIGHT / 2;
 
 	double xspeed = 0;
 	double yspeed = 0;
@@ -15,37 +17,25 @@ public class Rocket extends Group{
 		this(75);
 	}
 
-	public Polygon flame = new Polygon(
-			-4, -0.2,
-			-4.8, 0,
-			-4, 0.2
-			);
+	public Polygon flame = new Polygon(-4*15, -0.2*15, -4.8*15, 0*15, -4*15, 0.2*15);
 
-	public Polygon greatFlame = new Polygon(
-			-4, -0.5,
-			-5, -0.2,
-			-4.4, 0,
-			-5, 0.2,
-			-4, 0.5
+	public Polygon greatFlame = new Polygon(-4*15, -0.5*15, -5*15, -0.2*15, -4.4*15, 0*15, -5*15, 0.2*15, -4*15, 0.5*15);
+
+	public Polygon body = new Polygon(
+			-4*15, -0.5*15,
+			-5*15, -1*15,
+			-5*15, -2*15,
+			-3*15, -1*15,
+			-1*15, -1*15,
+			0*15, 0*15,
+			-1*15, 1*15,
+			-3*15, 1*15,
+			-5*15, 2*15,
+			-5*15, 1*15,
+			-4*15, 0.5*15
 			);
 
 	public Rocket(double width) {
-
-		Polygon body = new Polygon(
-				-4, -0.5,
-				-5, -1,
-				-5, -2,
-				-3, -1,
-				-1, -1,
-				
-				0, 0,
-				
-				-1, 1,
-				-3, 1,
-				-5, 2,
-				-5, 1,
-				-4, 0.5
-				);
 
 		body.setFill(Color.WHEAT);
 		flame.setFill(Color.RED);
@@ -54,17 +44,6 @@ public class Rocket extends Group{
 		greatFlame.setFill(Color.ORANGE);
 		greatFlame.setOpacity(0);
 
-		body.setScaleX(width/5);
-		body.setScaleY(width/5);
-
-		greatFlame.setTranslateX(flame.getTranslateX()-width/5*2+2);
-		flame.setTranslateX(flame.getTranslateX()-width/5*2+2);
-
-		greatFlame.setScaleX(width/5);
-		greatFlame.setScaleY(width/5);
-
-		flame.setScaleX(width/5);
-		flame.setScaleY(width/5);
 		this.getChildren().addAll(greatFlame, body, flame);
 
 	}
@@ -85,8 +64,26 @@ public class Rocket extends Group{
 		double deg = this.getRotate();
 		deg = Math.toRadians(deg);
 
-		this.yspeed = Math.sin(deg)*2;
-		this.xspeed = Math.cos(deg)*2;
+		this.yspeed = Math.sin(deg) * 2;
+		this.xspeed = Math.cos(deg) * 2;
+
+		for (Obstacle o : rocketStart.obstacles) {
+
+			double minx = this.getBoundsInParent().getMinX();
+			double miny = this.getBoundsInParent().getMinY();
+
+			for (Node n : this.getChildren()) {
+				minx += n.getBoundsInParent().getMinX();
+				miny += n.getBoundsInParent().getMinY();
+				double width = n.getBoundsInParent().getWidth();
+				double height = n.getBoundsInParent().getHeight();
+
+				if (o.getBoundsInParent().intersects(minx,miny,width,height)) {
+
+					//System.out.println("x: " + minx + "      y: " + miny);
+				}
+			}
+		}
 	}
 
 	public void summonFlame() {
@@ -117,28 +114,50 @@ public class Rocket extends Group{
 
 	public double getTipX() {
 
-		double scale = rocketStart.ROCKET_SIZE/5;
-
-		double lenthdiff = 2.5*scale;
+		double lenthdiff = 2.5 * 15;
 
 		double angle = Math.toRadians(this.getRotate());
 
-		return this.x + Math.cos(angle)*lenthdiff;
-		
+		return this.x + Math.cos(angle) * lenthdiff;
 
 	}
 
 	public double getTipY() {
 
-		double scale = rocketStart.ROCKET_SIZE/5;
 
-		double lenthdiff = 2.5*scale;
-		
+		double lenthdiff = 2.5 * 15;
+
 		double angle = Math.toRadians(this.getRotate());
 
-		return this.y + Math.sin(angle)*lenthdiff;
-		
+		return this.y + Math.sin(angle) * lenthdiff;
 
+	}
+
+	public void edges() {
+
+		if (this.getTranslateX() > rocketStart.WINDOW_WIDTH) {
+			this.x = 0;
+		} else if (this.getTranslateX() < -rocketStart.ROCKET_SIZE) {
+			this.x = rocketStart.WINDOW_WIDTH;
+		}
+
+		if (this.getTranslateY() > rocketStart.WINDOW_HEIGHT) {
+			this.y = 0;
+		} else if (this.getTranslateY() < -rocketStart.ROCKET_SIZE) {
+			this.y = rocketStart.WINDOW_HEIGHT;
+		}
+
+	}
+
+	public void kaos() {
+
+		body.setFill(Color.hsb(Math.random() * 360, Math.random(), 1));
+
+	}
+
+	public Paint getColor() {
+
+		return body.getFill();
 	}
 
 }

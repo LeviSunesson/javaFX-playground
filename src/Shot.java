@@ -1,25 +1,26 @@
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 
 public class Shot extends Circle{
 
 	double xspeed = 0, yspeed = 0;
-
+	
 	int r = 3;
 
 	Shot() {
 
-		this(0, 0, 0, 0, 0);
+		this(0, 0, 0, 0, 0, Color.RED);
 
 	}
 
-	Shot(double x,double y, double xspeed, double yspeed, double angle) {
+	Shot(double x,double y, double xspeed, double yspeed, double angle, Paint color) {
 
 		this.setTranslateX(x);
 		this.setTranslateY(y);
 		this.setRadius(r);
-		this.setFill(Color.RED);
+		this.setFill(color);
 
 
 		if (xspeed == 0 && yspeed == 0) {
@@ -44,6 +45,22 @@ public class Shot extends Circle{
 	public void remove() {
 		this.setOpacity(0);
 
+	}
+	
+	public void edges() {
+		
+		if (this.getTranslateX() > rocketStart.WINDOW_WIDTH) {
+			this.setTranslateX(0);
+		} else if (this.getTranslateX() < 0) {
+			this.setTranslateX(rocketStart.WINDOW_WIDTH);
+		}
+
+		if (this.getTranslateY() > rocketStart.WINDOW_HEIGHT) {
+			this.setTranslateY(0);	
+		} else if (this.getTranslateY() < 0) {
+			this.setTranslateY(rocketStart.WINDOW_HEIGHT);
+		}
+		
 	}
 
 }

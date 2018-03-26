@@ -40,8 +40,12 @@ public class Puck extends Circle{
 		x = Pong.WIDTH/2;
 		y = Pong.HEIGHT/2;
 		
-		double angle = map(Math.random(), 0, 1, -1*Math.PI/4, Math.PI/4) ;
+		//double angle = map(Math.random(), 0, 1, -1*Math.PI/4, Math.PI/4) ;
 	    
+		//double angle = -1*Math.PI/4 + Math.random()*Math.PI/2;
+		
+		double angle = -1*Math.toRadians(34) + Math.random()*2*Math.toRadians(34);
+		
 	    xspeed = 5 * Math.cos(angle);
 	    yspeed = 5 * Math.sin(angle);
 	    

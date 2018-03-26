@@ -6,18 +6,20 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class rocketStart extends Application{
-	public static final double WINDOW_WIDTH = 800;
-	public static final double WINDOW_HEIGHT = 600;
+	public static final double WINDOW_WIDTH = 1600;
+	public static final double WINDOW_HEIGHT = 900;
 	public static final double ROCKET_SIZE = 75;
 
 	private short btime = 0;
-	
+
 	public static final ArrayList<KeyCode> keys = new ArrayList<KeyCode>();
 
 	public ArrayList<Shot> shots  = new ArrayList<Shot>();
+	public static ArrayList<Obstacle> obstacles  = new ArrayList<Obstacle>();
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -26,6 +28,15 @@ public class rocketStart extends Application{
 
 		Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT, Color.BLACK);
 
+		for (int rows = 0; rows < 100; rows++) {
+			for (int cols = 0; cols < 100; cols++) {
+				if (Math.random() > 0.99) {
+					Circle star = new Circle(WINDOW_WIDTH/100*rows, WINDOW_HEIGHT/100*cols, 1, Color.YELLOW);
+					root.getChildren().add(star);
+				}
+			}
+		}
+		
 		Rocket rocket = new Rocket(ROCKET_SIZE);
 
 		root.getChildren().add(rocket);
@@ -52,18 +63,38 @@ public class rocketStart extends Application{
 				}
 			}
 		});
+		
+		for (int i = 0; i < 10; i++) {
+			obstacles.add(new Obstacle());
+			root.getChildren().add(obstacles.get(i));
+		}
 
 		AnimationTimer at = new AnimationTimer() {
 
 			@Override
 			public void handle(long now) {
 
+				for(Obstacle o : obstacles) {
+					for(Shot s : shots) {
+						
+						if (o.hit(s)) {
+							s.remove();
+							s.xspeed = 0;
+							s.yspeed = 0;
+						}
+					}
+				}
+				
+				
 
 				for (Shot s : shots) {
 					if (!root.getChildren().contains(s)) {
 						root.getChildren().add(s);
 					}
 					s.update();
+					
+					//s.edges();
+					
 				}
 
 				for (int i = 0; i < keys.size(); i++) {
@@ -87,35 +118,28 @@ public class rocketStart extends Application{
 						break;
 					case Q:
 						rocket.setRotate(rocket.getRotate() - 2);
-						break;			
+						break;
+					case K:
+						rocket.kaos();
+						break;
 					default:
 						break;
 					}
 					if (keys.get(i) == KeyCode.B && btime == 0) {
-						btime = 30;
-						shots.add(new Shot(rocket.getTipX() , rocket.getTipY() , rocket.xspeed, rocket.yspeed, rocket.getRotate()));
-
+						btime = 60/2;
+						shots.add(new Shot(rocket.getTipX() , rocket.getTipY() , rocket.xspeed, rocket.yspeed, rocket.getRotate(), rocket.getColor()));
 					}
 
-					if (rocket.getTranslateX() > WINDOW_WIDTH) {
-						rocket.x = 0;
-					} else if (rocket.getTranslateX() < - ROCKET_SIZE) {
-						rocket.x = WINDOW_WIDTH;
-					}
-
-					if (rocket.getTranslateY() > WINDOW_HEIGHT) {
-						rocket.y = 0;	
-					} else if (rocket.getTranslateY() < -ROCKET_SIZE) {
-						rocket.y = WINDOW_HEIGHT;
-					}
+					rocket.edges();
 
 				}
 
 				removeBullets();
-				
+
 				bTimer();
-				
+
 				rocket.update();
+
 			}
 
 		};
@@ -123,12 +147,20 @@ public class rocketStart extends Application{
 		at.start();
 
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.show();
 
 	}
 
 	private void removeBullets() {
-		for (int i = shots.size()-1; i > 0; i--) {
+		
+		/*if (shots.size() > 5) {
+			shots.get(0).remove();
+			shots.remove(0);
+			
+		}
+		
+		/*/for (int i = shots.size()-1; i > 0; i--) {
 			if (
 					shots.get(i).getTranslateY() < 0 || 
 					shots.get(i).getTranslateY() > WINDOW_HEIGHT ||
@@ -140,7 +172,7 @@ public class rocketStart extends Application{
 			}
 		}
 	}
-	
+
 	private void bTimer() {
 		if (btime == 0) {
 			return;
@@ -149,7 +181,7 @@ public class rocketStart extends Application{
 			return;	
 		}
 	}
-	
+
 
 	public static void main(String[] args) {
 
