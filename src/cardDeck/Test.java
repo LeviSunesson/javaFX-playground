@@ -22,20 +22,22 @@ public class Test extends Application {
 		primaryStage.show();
 		
 		
+		CardDeck deck = new CardDeck();
+		
+		deck.shuffle();
+		
 		for (int i = 1; i <= 4; i++) {
 			
 			for (int j = 2; j <= 14; j++) {
 				
-				cards.add(new Card(i, j, j*90 - 135, i*100-50));
+				cards.add(new Card(i, j));
 				
-			}
-			
-		}
-		
-		for(Card c : cards) {
-			
-			if (!root.getChildren().contains(c)) {
-				root.getChildren().add(c);
+				cards.get(cards.size()-1).setPos(j*90 - 135, i*100-50);
+				
+				if (!root.getChildren().contains(cards.get(cards.size()-1))) {
+					root.getChildren().add(cards.get(cards.size()-1));
+				}
+						
 			}
 			
 		}

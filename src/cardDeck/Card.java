@@ -10,10 +10,15 @@ public class Card extends Group{
 	private String COLOR;
 	private int VALUE;
 
-	public Card(int a, int b, double x, double y) {
-
+	public void setPos(double x, double y) {
+		
 		this.setTranslateX(x);
 		this.setTranslateY(y);
+		
+	}
+	
+	public Card(int a, int b) {
+
 		
 		if (a > 4) {
 			a = 4;
