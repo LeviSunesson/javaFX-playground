@@ -16,15 +16,18 @@ public class Test extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Group root = new Group();
 		
-		Scene scene =  new Scene(root, 1200, 500, Color.BLACK);
+		Scene scene =  new Scene(root, 1200, 800, Color.BLACK);
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
-		
-		CardDeck deck = new CardDeck();
-		
-		deck.shuffle();
+			
+//		Card card = new Card(3, 13);
+//		
+//		card.setScaleX(8);
+//		card.setScaleY(8);
+//		card.setPos(300, 300);
+//		
+//		root.getChildren().add(card);
 		
 		for (int i = 1; i <= 4; i++) {
 			

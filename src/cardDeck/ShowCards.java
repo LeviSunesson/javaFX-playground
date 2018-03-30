@@ -21,7 +21,7 @@ public class ShowCards extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		
 		Group root = new Group();
-		Scene scene = new Scene(root, 600, 400, Color.BLACK);
+		Scene scene = new Scene(root, 600, 800, Color.BLACK);
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -43,7 +43,9 @@ public class ShowCards extends Application{
 						counter--;
 						
 						Card card = deck.draw();
-						card.setPos(50, 50);
+						card.setPos(300, 300);
+						card.setScaleX(8);
+						card.setScaleY(8);
 
 						root.getChildren().add(card);   
 

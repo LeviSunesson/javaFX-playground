@@ -8,6 +8,7 @@ import javafx.scene.shape.Rectangle;
 public class AngleSlider extends Group{
 	
 	double x, y;
+	boolean switcher = true;
 	
 	AngleSlider() {
 		
@@ -60,8 +61,6 @@ public class AngleSlider extends Group{
 	
 	private void pulseSize() {
 		
-		boolean switcher = true;
-		
 		if (switcher) {
 			this.setScaleY(this.getScaleY()*1.01);
 			if (this.getScaleY() >= 2.0) {
@@ -71,7 +70,7 @@ public class AngleSlider extends Group{
 		
 		if (!switcher) {
 			this.setScaleY(this.getScaleY()*0.99);
-			if (this.getScaleY() <= 0.1) {
+			if (this.getScaleY() <= 0.25) {
 				switcher = true;
 			}
 		}
@@ -102,6 +101,12 @@ public class AngleSlider extends Group{
 	public void hide() {
 		
 		this.setOpacity(0);
+		
+	}
+	
+	public void resetSize() {
+		
+		this.setScaleY(1);
 		
 	}
 	
