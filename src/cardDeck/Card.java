@@ -11,7 +11,10 @@ public class Card extends Group{
 	private String COLOR;
 	private int VALUE;
 	private int COLOUR;
+	private static Solitaire game;
 
+	private Rectangle backside = new Rectangle(45, 80, Color.GREY);
+	
 	public void setPos(double x, double y) {
 
 		this.setTranslateX(x);
@@ -19,10 +22,16 @@ public class Card extends Group{
 
 	}
 
-	public int getColor() {
+	public int getColorValue() {
 
 		return COLOUR;
 
+	}
+	
+	public String getColorName() {
+		
+		return COLOR;
+		
 	}
 
 	public int getValue() {
@@ -32,7 +41,15 @@ public class Card extends Group{
 	}
 
 	public Card(int a, int b) {
-
+		
+		if(game == null) {
+			game = Solitaire.GAME;
+		}
+		
+		backside.setOpacity(0);
+		backside.setArcHeight(10);
+		backside.setArcWidth(10);
+		
 		COLOUR = a;
 
 		if (a > 4)a = 4;
@@ -43,6 +60,9 @@ public class Card extends Group{
 
 		Text value = new Text(" " + VALUE);
 
+		this.setOnMouseClicked(event->{
+			game.moveCard(this);
+		});
 
 
 		value.setTranslateX(30);
@@ -188,6 +208,18 @@ public class Card extends Group{
 			break;
 		}
 
+		this.getChildren().add(backside);
+		
+	}
+	
+	public void flip() {
+		
+		if (backside.getOpacity() < 0.5 ) {
+			backside.setOpacity(1);
+		}else if (backside.getOpacity() > 0.5) {
+			backside.setOpacity(0);
+		}
+		
 	}
 
 }

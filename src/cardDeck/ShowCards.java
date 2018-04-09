@@ -25,9 +25,11 @@ public class ShowCards extends Application{
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
-
+		
 		new AnimationTimer() {
 
+			Card card = new Card(1,2);
+			
 			@Override
 			public void handle(long arg0) {
 
@@ -42,12 +44,18 @@ public class ShowCards extends Application{
 
 						counter--;
 						
-						Card card = deck.draw();
+						card = deck.draw();
 						card.setPos(300, 300);
 						card.setScaleX(8);
 						card.setScaleY(8);
 
 						root.getChildren().add(card);   
+
+					}
+					
+					if (event.getCode() == KeyCode.B && spawncard) {
+						
+						card.flip();
 
 					}	
 
