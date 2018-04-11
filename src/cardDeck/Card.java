@@ -14,7 +14,9 @@ public class Card extends Group{
 	private static Solitaire game;
 
 	private Rectangle backside = new Rectangle(45, 80, Color.GREY);
-	
+
+	private Rectangle highlight = new Rectangle(45, 80, Color.rgb(120, 220, 30,0.4));
+
 	public void setPos(double x, double y) {
 
 		this.setTranslateX(x);
@@ -27,11 +29,11 @@ public class Card extends Group{
 		return COLOUR;
 
 	}
-	
+
 	public String getColorName() {
-		
+
 		return COLOR;
-		
+
 	}
 
 	public int getValue() {
@@ -41,27 +43,33 @@ public class Card extends Group{
 	}
 
 	public Card(int a, int b) {
-		
+
 		if(game == null) {
 			game = Solitaire.GAME;
 		}
-		
+
+		highlight.setOpacity(0);
+		highlight.setArcHeight(10);
+		highlight.setArcWidth(10);
 		backside.setOpacity(0);
 		backside.setArcHeight(10);
 		backside.setArcWidth(10);
-		
+
 		COLOUR = a;
 
 		if (a > 4)a = 4;
 		if (a < 1)a = 1;
-		if (b > 14)b = 14;
-		if (b < 2) b = 2;
+		if (b > 13)b = 13;
+		if (b < 1) b = 1;
 		this.VALUE = b;
 
 		Text value = new Text(" " + VALUE);
 
 		this.setOnMouseClicked(event->{
-			game.moveCard(this);
+			if (!Solitaire.CARDHL) {
+				game.moveCard(this);
+			}
+
 		});
 
 
@@ -80,7 +88,7 @@ public class Card extends Group{
 		if (VALUE == 13) {
 			value.setText(" K");
 		}
-		if (VALUE == 14) {
+		if (VALUE == 1) {
 			value.setText(" A");
 		}
 
@@ -208,18 +216,30 @@ public class Card extends Group{
 			break;
 		}
 
-		this.getChildren().add(backside);
-		
+		this.getChildren().addAll(backside, highlight);
+
 	}
-	
+
 	public void flip() {
-		
+
 		if (backside.getOpacity() < 0.5 ) {
 			backside.setOpacity(1);
 		}else if (backside.getOpacity() > 0.5) {
 			backside.setOpacity(0);
 		}
-		
+
+	}
+
+	public void highlight() {
+
+			highlight.setOpacity(1);
+
+	}
+	
+	public void deHl() {
+
+			highlight.setOpacity(0);
+
 	}
 
 }

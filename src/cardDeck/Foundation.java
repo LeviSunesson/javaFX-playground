@@ -28,16 +28,26 @@ public class Foundation extends Group{
 	
 	// ---------- Functions for the foundations ---------- //
 
+	public ArrayList<Card> get() {
+		
+		return foundation;
+		
+	}
+	
 	public boolean addCard(Card card) {
 
-		if (card.getColorName().equals(color) && card.getValue() == foundation.size() + 2) {
+		if (card.getColorName().equals(color) && card.getValue() == foundation.size() + 1) {
+
 			foundation.add(card);
+			card.setPos(0, 0);
 			this.getChildren().add(card);
+			
 			return true;
+			
 		}
 
 		return false;
-
+		
 	}
 
 	public void setPos(float x, float y) {

@@ -11,11 +11,6 @@ import javafx.stage.Stage;
 public class ShowCards extends Application{
 
 	CardDeck deck = new CardDeck();
-
-	short counter = (short) deck.get().size();
-
-	boolean spawncard = true;
-	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -33,17 +28,10 @@ public class ShowCards extends Application{
 			@Override
 			public void handle(long arg0) {
 
-				if (counter == 0) {
-					spawncard = false;
-					this.stop();
-				}
-
 				scene.setOnKeyPressed( event->{
 
-					if (event.getCode() == KeyCode.SPACE && spawncard) {
+					if (event.getCode() == KeyCode.SPACE) {
 
-						counter--;
-						
 						card = deck.draw();
 						card.setPos(300, 300);
 						card.setScaleX(8);
@@ -53,9 +41,9 @@ public class ShowCards extends Application{
 
 					}
 					
-					if (event.getCode() == KeyCode.B && spawncard) {
+					if (event.getCode() == KeyCode.B) {
 						
-						card.flip();
+						card.highlight();
 
 					}	
 
