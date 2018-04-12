@@ -56,15 +56,7 @@ public class Solitaire extends Application{
 
 				scene.setOnKeyPressed( event->{
 
-					if (event.getCode() == KeyCode.SPACE) {
-
-						Card card = deck.draw();
-						card.setPos(300, 300);
-
-						root.getChildren().add(card);  
-						CARDHL = false;
-
-					}
+					
 
 				});
 
@@ -127,7 +119,6 @@ public class Solitaire extends Application{
 					pile1.getBoundsInParent().getMaxY() > mouseY
 					) {
 
-				System.out.println("moved to pile 1");
 				if (pile1.addCard(c)) {
 
 					root.getChildren().remove(c);
@@ -142,8 +133,7 @@ public class Solitaire extends Application{
 					pile2.getBoundsInParent().getMinY() < mouseY &&
 					pile2.getBoundsInParent().getMaxY() > mouseY
 					) {
-
-				System.out.println("moved to pile 2");
+				
 				if (pile2.addCard(c)) {
 
 					root.getChildren().remove(c);
@@ -159,7 +149,6 @@ public class Solitaire extends Application{
 					pile3.getBoundsInParent().getMaxY() > mouseY
 					) {
 
-				System.out.println("moved to pile 3");
 				if (pile3.addCard(c)) {
 
 					root.getChildren().remove(c);
@@ -175,7 +164,6 @@ public class Solitaire extends Application{
 					pile4.getBoundsInParent().getMaxY() > mouseY
 					) {
 
-				System.out.println("moved to pile 4");
 				if (pile4.addCard(c)) {
 
 					root.getChildren().remove(c);
@@ -191,7 +179,6 @@ public class Solitaire extends Application{
 					pile5.getBoundsInParent().getMaxY() > mouseY
 					) {
 
-				System.out.println("moved to pile 5");
 				if (pile5.addCard(c)) {
 
 					root.getChildren().remove(c);
@@ -207,7 +194,6 @@ public class Solitaire extends Application{
 					pile6.getBoundsInParent().getMaxY() > mouseY
 					) {
 
-				System.out.println("moved to pile 6");
 				if (pile6.addCard(c)) {
 
 					root.getChildren().remove(c);
@@ -223,7 +209,6 @@ public class Solitaire extends Application{
 					pile7.getBoundsInParent().getMaxY() > mouseY
 					) {
 
-				System.out.println("moved to pile 7");
 				if (pile7.addCard(c)) {
 
 					root.getChildren().remove(c);
@@ -266,6 +251,13 @@ public class Solitaire extends Application{
 		foundations.add(spadesF);
 		foundations.add(diamondsF);
 
+		for (Card c: deck.get()) {
+			
+			c.setPos(45, 45);
+			root.getChildren().add(c);
+			
+		}
+		
 		for(Pile p : piles)root.getChildren().add(p);
 
 		for(Foundation found : foundations)root.getChildren().add(found);

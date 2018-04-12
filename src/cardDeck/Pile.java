@@ -27,7 +27,7 @@ public class Pile extends Group {
 	}
 
 	public boolean addCard(Card card) {
-
+		
 		if (pile.size() == 0 ) {
 			pile.add(card);
 			card.setPos(0, 0);
