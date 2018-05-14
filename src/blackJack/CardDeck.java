@@ -34,6 +34,24 @@ public class CardDeck {
 
 	}
 
+	public void reset() {
+		
+		for (int i = cards.size(); i > 0; i++) {
+			
+			cards.remove(i);
+			
+		}
+		
+		for (int i = 1; i <= 4; i++) {
+			for (int j = 1; j <= 13; j++) {
+
+				cards.add(new Card(i, j));
+
+			}
+		}
+		
+	}
+	
 	public ArrayList<Card> get() {
 
 		return cards;

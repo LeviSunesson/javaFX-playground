@@ -11,6 +11,9 @@ public class Card extends Group{
 	private String COLOR;
 	private int VALUE;
 	private int COLOUR;
+	
+
+	private Rectangle backside = new Rectangle(45, 80, Color.GREY);
 
 	public void setPos(double x, double y) {
 
@@ -36,9 +39,26 @@ public class Card extends Group{
 		return VALUE;
 
 	}
+	
+	public void flip() {
+
+		if (backside.getOpacity() < 0.5 ) {
+			backside.setOpacity(1);
+		}else if (backside.getOpacity() > 0.5) {
+			backside.setOpacity(0);
+		}
+
+	}
 
 	public Card(int a, int b) {
 
+
+		this.getChildren().add(backside);
+		
+		backside.setOpacity(0);
+		backside.setArcHeight(10);
+		backside.setArcWidth(10);
+		
 		this.setOnMouseClicked(event->{
 
 		});
