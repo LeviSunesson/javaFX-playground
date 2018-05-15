@@ -26,9 +26,23 @@ public class Player extends Group{
 		this(0, 0);
 
 	}
+	
+	Player(String newName){
+		
+		this(0, 0, newName);
+		
+	}
 
 	Player(double x, double y){
 
+		this(x, y, null);
+
+	}
+	
+	Player(double x, double y, String newName){
+		
+		name.setText(newName);
+		
 		this.x = x;
 		this.y = y;
 
@@ -63,11 +77,11 @@ public class Player extends Group{
 		hitButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 
-				hit(Test2.deck.draw());
+				hit(BlackJack.deck.draw());
 
 			}
 		});
-
+		
 	}
 	
 	public void activateHit() {
@@ -135,6 +149,16 @@ public class Player extends Group{
 	}
 	
 	public void reset() {
+		
+		for(Card card : hand) {
+			
+			if(this.getChildren().contains(card)) {
+				
+				this.getChildren().remove(card);
+				
+			}
+			
+		}
 		
 		hand.clear();
 		

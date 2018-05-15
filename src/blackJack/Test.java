@@ -1,60 +1,211 @@
 package blackJack;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
-public class Test extends Application{
+public class Test{
 
-	Group root = new Group();
-	
-	Scene scene = new Scene(root, 800, 450, Color.WHITE);
-	
-	Player player1 = new Player(50, 125);
+	static Group root = new Group();
+	static Group endGroup = new Group();
+
+	static Scene scene = new Scene(root, 800, 450, Color.WHITE);
+	static Scene endScene = new Scene(endGroup, 800, 450, Color.WHITE);
+
+	static Player player1 = new Player(50, 50);
+
+	static Dealer dealer = new Dealer(450, 50);
+
+	static boolean dealt = false;
+
 	static CardDeck deck = new CardDeck();
-	@Override
-	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
-		
-		arg0.setScene(scene);
-		arg0.show();
-		
+
+	public static boolean dealerT = false;
+
+	static AnimationTimer AT;
+
+	
+	public static void start() {
+
+		player1.deactivateHit();
+		dealer.deactivateHit();
+
 		deck.shuffle();
-		
-		player1.setName("Pontus");
-		
-		root.getChildren().addAll(player1);
-		
-		new AnimationTimer() {
+
+		Button dealButton = new Button("DEAL");
+		dealButton.setTranslateX(300);
+		dealButton.setTranslateY(300);
+		dealButton.setMinWidth(200);
+		dealButton.setMinHeight(100);
+		dealButton.setStyle(
+				"-fx-background-color: rgba(0, 0, 0, 0.5);"
+						+ "-fx-text-fill: black;"
+						+ "-fx-background-radius: 0 0 0 0;"
+						+ "-fx-border-radius:0 0 0 0;"
+						+ "-fx-width: 200px;"
+						+ "-fx-height: 100px;"
+						+ "-fx-font-size: 50px;");
+
+		dealButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+
+				if (!dealt) {
+
+					player1.activateHit();
+					dealer.activateHit();
+
+					player1.hit(deck.draw());
+					player1.hit(deck.draw());
+
+					dealer.hit(deck.draw());
+					dealer.hit(deck.draw());
+
+					dealt = true;
+				}
+
+			}
+		});
+
+		player1.setName("Player");
+
+		root.getChildren().addAll(player1, dealer, dealButton);
+
+		AT = new AnimationTimer() {
 
 			@Override
 			public void handle(long arg0) {
 
+				if (dealerT || player1.getScore() >= 21) {
+					dealerTurn();
+				}
+
 				player1.update();
-				
+				dealer.update();
+
 			}
 
-		}.start();
-		
-	}
-	
-	public static void main(String[] args) {
-		launch(args);
+		};
+
+		AT.start();
+
 	}
 
-	/*
-	 * deal
-	 * 
-	 * dealer deals cards
-	 * 
-	 * while(!stand && player.points < 21){
-	 * 	hit/stand
-	 * }
-	 * 
-	 * play again?
-	 * 
-	*/
+	public static void dealerTurn() {
+
+		player1.deactivateHit();
+
+		if (player1.getScore() > 21) {
+			checkWin(player1, dealer);
+		}else if (dealer.getScore() < 17) {
+			dealer.hit(deck.draw());
+		}else if (dealer.getScore() > 16) {
+			checkWin(player1, dealer);
+		}
+
+	}
+
+	private static void endScene(Player winner) {
+
+		endGroup.getChildren().clear();
+		
+		reset();
+		dealt = false;
+		player1.update();
+		dealer.update();
+		
+		player1.deactivateHit();
+		dealer.deactivateHit();
+
+		Text winnerText = new Text(winner.getName() + " WON!");
+		winnerText.setTranslateX(0);
+		winnerText.setTranslateY(100);
+		winnerText.setFont(new Font(100));
+
+		Button playAgain = new Button("PLAY AGAIN");
+		playAgain.setTranslateX(300);
+		playAgain.setTranslateY(300);
+		playAgain.setMinWidth(200);
+		playAgain.setMinHeight(100);
+		playAgain.setStyle(
+				"-fx-background-color: rgba(0, 0, 0, 0.5);"
+						+ "-fx-text-fill: black;"
+						+ "-fx-background-radius: 0 0 0 0;"
+						+ "-fx-border-radius:0 0 0 0;"
+						+ "-fx-width: 200px;"
+						+ "-fx-height: 100px;"
+						+ "-fx-font-size: 50px;");
+
+		playAgain.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+
+			}
+		});
+
+		endGroup.getChildren().addAll(winnerText, playAgain);
+
+
+	}
+
+	private static void checkWin(Player player, Dealer dealer) {
+
+		if (player.getScore() == 21) {
+
+			playerWon();
+
+		}else if ((21-player.getScore()) < (21-dealer.getScore()) && player.getScore() < 21) {
+
+			playerWon();
+
+		}else if (player.getScore() < 21 && dealer.getScore() > 21) {
+
+			playerWon();
+
+		}else if((21-player.getScore()) > (21-dealer.getScore()) && player.getScore() < 21) {
+
+			dealerWon();
+
+		}else if (player.getScore() > 21 && dealer.getScore() < 21) {
+
+			dealerWon();
+
+		}else {
+			
+			dealerWon();
+
+		}
+
+	}
+
+	private static void reset() {
+
+		deck.reset();
+		player1.reset();
+		dealer.reset();		
+		
+		deck.shuffle();
+
+	}
+
+	private static void dealerWon() {
+
+		AT.stop();
+		endScene(dealer);
+		//stage.setScene(endScene);
+
+	}
+
+	private static void playerWon() {
+
+		AT.stop();
+		endScene(player1);
+		//stage.setScene(endScene);
+
+	}
+
 }

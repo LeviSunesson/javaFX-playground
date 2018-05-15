@@ -14,7 +14,7 @@ public class Dealer extends Player{
 	Dealer(double x, double y){
 		
 		super(x, y);
-		setName("Dealer");
+		setName("DEALER");
 		
 		hitButton.setText("Stand");
 	
@@ -38,7 +38,7 @@ public class Dealer extends Player{
 	
 	private void dealerTurn() {
 		
-		Test2.dealerT = true;
+		BlackJack.dealerT = true;
 		
 	}
 	

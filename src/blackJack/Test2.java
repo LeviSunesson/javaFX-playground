@@ -14,10 +14,10 @@ import javafx.stage.Stage;
 
 public class Test2 extends Application{
 
-	Group root = new Group();
+	static Group root = new Group();
 	Group endGroup = new Group();
 
-	Scene scene = new Scene(root, 800, 450, Color.WHITE);
+	static Scene scene = new Scene(root, 800, 450, Color.WHITE);
 	Scene endScene = new Scene(endGroup, 800, 450, Color.WHITE);
 
 	Player player1 = new Player(50, 50);
