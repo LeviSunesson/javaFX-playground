@@ -136,9 +136,7 @@ public class Player extends Group{
 	
 	public void reset() {
 		
-		for (int i = hand.size(); i > 0; i++) {
-			hand.remove(i);
-		}
+		hand.clear();
 		
 	}
 
