@@ -21,24 +21,42 @@ public class Player extends Group{
 	double x;
 	double y;
 
+	/**
+	 * Creates a new player with a basic UI
+	 */
 	Player(){
 
 		this(0, 0);
 
 	}
 	
+	/**
+	 * Creates a new player with a basic UI
+	 * @param newName the name of the player
+	 */
 	Player(String newName){
 		
 		this(0, 0, newName);
 		
 	}
 
+	/**
+	 * Creates a new player with a basic UI
+	 * @param x the x origin of the player on the screen
+	 * @param y the y origin of the player on the screen
+	 */
 	Player(double x, double y){
 
 		this(x, y, null);
 
 	}
 	
+	/**
+	 * Creates a new player with a basic UI
+	 * @param x the x origin of the player on the screen
+	 * @param y the y origin of the player on the screen
+	 * @param newName the name of the player
+	 */
 	Player(double x, double y, String newName){
 		
 		name.setText(newName);
@@ -84,12 +102,18 @@ public class Player extends Group{
 		
 	}
 	
+	/**
+	 * Enables the hit button
+	 */
 	public void activateHit() {
 		
 		hitButton.setDisable(false);
 		
 	}
 	
+	/**
+	 * Disables the hit button
+	 */
 	public void deactivateHit() {
 		
 		
@@ -97,18 +121,29 @@ public class Player extends Group{
 		
 	}
 
+	/**
+	 * 
+	 * @return Name of player
+	 */
 	public String getName() {
 
 		return name.getText();
 
 	}
 
+	/**
+	 * Sets the name of the player
+	 * @param name the new name of the player
+	 */
 	public void setName(String name) {
 
 		this.name.setText(name);
 
 	}
 
+	/**
+	 * Updates the player with all the new information accumulated
+	 */
 	public void update() {
 
 		value.setText("Value: " + getScore());
@@ -136,18 +171,29 @@ public class Player extends Group{
 
 	}
 	
+	/**
+	 *  Adds a card the the players hand
+	 * @param card the card to be added
+	 */
 	public void hit(Card card) {	
 		
 		hand.add(card);
 		
 	}
 
+	/**
+	 * See hit()
+	 * @param card 
+	 */
 	public void addCard(Card card) {
 
 		hand.add(card);
 
 	}
 	
+	/**
+	 * Empties the players hand and clears all the cards
+	 */
 	public void reset() {
 		
 		for(Card card : hand) {
@@ -164,6 +210,10 @@ public class Player extends Group{
 		
 	}
 
+	/**
+	 * Returns the current score of the player
+	 * @return player score
+	 */
 	public int getScore() {
 
 		int score = 0;

@@ -40,6 +40,8 @@ public class BlackJack extends Application {
 	@Override
 	public void start(Stage arg0) throws Exception {
 
+		//Basic setup
+		
 		stage = arg0;
 
 		player1.deactivateHit();
@@ -55,10 +57,14 @@ public class BlackJack extends Application {
 
 	}
 
+	/**
+	 * Sets up the main scene for the game
+	 */
 	private void mainScene() {
 
 		deck.shuffle();
 
+		//Deal button for initializing the game, and styling
 		Button dealButton = new Button("DEAL");
 		dealButton.setTranslateX(300);
 		dealButton.setTranslateY(300);
@@ -73,6 +79,7 @@ public class BlackJack extends Application {
 						+ "-fx-height: 100px;"
 						+ "-fx-font-size: 50px;");
 
+		//If button is pressed the deal cards and start game
 		dealButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				
@@ -117,6 +124,9 @@ public class BlackJack extends Application {
 
 	}
 
+	/**
+	 * Calculates what to do based on current scores in the game
+	 */
 	public void dealerTurn() {
 
 		player1.deactivateHit();
@@ -131,6 +141,10 @@ public class BlackJack extends Application {
 
 	}
 
+	/**
+	 * Sets up the end scene
+	 * @param winner the player who won
+	 */
 	private void endScene(Player winner) {
 
 		endGroup.getChildren().clear();
@@ -143,16 +157,19 @@ public class BlackJack extends Application {
 		player1.deactivateHit();
 		dealer.deactivateHit();
 
+		//Text for number of wins, and styling
 		Text totWins = new Text("wins: " + WINS);
 		totWins.setFont(new Font(100));
 		totWins.setTranslateX(scene.getWidth()/2 - totWins.getLayoutBounds().getWidth()/2);
 		totWins.setTranslateY(200);
 		
+		//Text and styling for who won
 		Text winnerText = new Text(winner.getName() + " WON!");
 		winnerText.setFont(new Font(100));
 		winnerText.setTranslateX(scene.getWidth()/2 - winnerText.getLayoutBounds().getWidth()/2);
 		winnerText.setTranslateY(100);
 
+		//Play again button, and styling
 		Button playAgain = new Button("PLAY AGAIN");
 		playAgain.setTranslateX(300);
 		playAgain.setTranslateY(300);
@@ -167,6 +184,7 @@ public class BlackJack extends Application {
 						+ "-fx-height: 100px;"
 						+ "-fx-font-size: 50px;");
 
+		//If button is pressed then start game again 
 		playAgain.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 
@@ -179,14 +197,19 @@ public class BlackJack extends Application {
 
 
 	}
-
+	
+	/**
+	 * Sets up the start scene of the game
+	 */
 	private void startScene() {
 
+		//Text and styling
 		Text welcomeText = new Text("Welcome to blackJack!");
 		welcomeText.setTranslateX(0);
 		welcomeText.setTranslateY(100);
 		welcomeText.setFont(new Font(50));
 
+		//Button and styling
 		Button startButton = new Button("START");
 		startButton.setTranslateX(300);
 		startButton.setTranslateY(300);
@@ -201,6 +224,7 @@ public class BlackJack extends Application {
 						+ "-fx-height: 100px;"
 						+ "-fx-font-size: 25px;");
 
+		// If the button is pressed start the game scene
 		startButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 
@@ -213,7 +237,12 @@ public class BlackJack extends Application {
 
 
 	}
-
+	
+	/**
+	 * Checks who won the game based on a series of rules
+	 * @param player The player of the game
+	 * @param dealer The dealer of the game
+	 */
 	private void checkWin(Player player, Dealer dealer) {
 
 		if (player.getScore() == 21) {
@@ -246,6 +275,9 @@ public class BlackJack extends Application {
 
 	}
 
+	/**
+	 * Resets the game to the start
+	 */
 	private void reset() {
 
 		deck.reset();
@@ -259,18 +291,25 @@ public class BlackJack extends Application {
 
 	}
 
+	/**
+	 * Stops the game and saves the score then proceeds to the end scene
+	 * @param winner The player who won
+	 */
 	private void Winner(Player winner) {
 		
+		// If the player won the score goes up
 		if (winner.getName().equals("PLAYER")) {
 			WINS++;
 		}
 		
+		// Wait for 0.75 sec
 		try {
 			Thread.sleep(750);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
+		//Stop the game and proceed to the end
 		AT.stop();
 		endScene(winner);
 		stage.setScene(endScene);

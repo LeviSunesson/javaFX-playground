@@ -15,6 +15,11 @@ public class Card extends Group{
 
 	private Rectangle backside = new Rectangle(45, 80, Color.GREY);
 
+	/**
+	 * Changes the position of the card to x, y
+	 * @param x new x coordinate
+	 * @param y new y coordinate
+	 */
 	public void setPos(double x, double y) {
 
 		this.setTranslateX(x);
@@ -22,24 +27,39 @@ public class Card extends Group{
 
 	}
 
+	/**
+	 * 
+	 * @return The value of the color of the card as a number
+	 */
 	public int getColorValue() {
 
 		return COLOUR;
 
 	}
 
+	/**
+	 * 
+	 * @return The name of the color of the card as a String
+	 */
 	public String getColorName() {
 
 		return COLOR;
 
 	}
 
+	/**
+	 * 
+	 * @return The value of the card
+	 */
 	public int getValue() {
 
 		return VALUE;
 
 	}
 	
+	/**
+	 * Flips the card so you only see a grey square instead of the front of the card
+	 */
 	public void flip() {
 
 		if (backside.getOpacity() < 0.5 ) {
@@ -50,6 +70,11 @@ public class Card extends Group{
 
 	}
 
+	/**
+	 * Creates a new card from a color (a) and a value (b)
+	 * @param a the color of the new card
+	 * @param b the value of the new card
+	 */
 	public Card(int a, int b) {
 
 
@@ -65,6 +90,7 @@ public class Card extends Group{
 		
 		COLOUR = a;
 
+		// Limits the values acquired
 		if (a > 4)a = 4;
 		if (a < 1)a = 1;
 		if (b > 13)b = 13;
@@ -106,6 +132,7 @@ public class Card extends Group{
 
 		this.getChildren().addAll(background, top, value);
 
+		// This switch case controls the shield of the card
 		switch (a) {
 		case 1:
 			COLOR = "spades";
