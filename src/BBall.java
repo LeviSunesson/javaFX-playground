@@ -36,7 +36,7 @@ public class BBall extends Circle{
 		y += yspeed;
 		double grav = 0.5;
 		yspeed = yspeed + grav;
-		if (y > BounceCort.HEIGHT) {
+		if (y > BounceCort.HEIGHT - this.getRadius()) {
 			yspeed *= -1;
 			yspeed += .6;
 			y -= 5;
@@ -46,7 +46,7 @@ public class BBall extends Circle{
 	public void wind() {
 
 		x += xspeed;
-		if (x > BounceCort.WIDTH || x < 0) {
+		if (x > BounceCort.WIDTH  - this.getRadius() || x < this.getRadius()) {
 			xspeed*= -1;
 		}
 	}

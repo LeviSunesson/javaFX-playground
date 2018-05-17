@@ -1,7 +1,5 @@
 package pongGame;
 
-//import java.util.ArrayList;
-
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -26,7 +24,6 @@ public class Puck extends Circle{
 	}
 
 	public void update() {
-		// TODO Auto-generated method stub
 		x = x + xspeed;
 		y = y + yspeed;
 		

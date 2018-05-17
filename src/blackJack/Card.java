@@ -1,4 +1,4 @@
-package cardDeck;
+package blackJack;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -11,12 +11,15 @@ public class Card extends Group{
 	private String COLOR;
 	private int VALUE;
 	private int COLOUR;
-	private static Solitaire game;
+	
 
 	private Rectangle backside = new Rectangle(45, 80, Color.GREY);
 
-	private Rectangle highlight = new Rectangle(45, 80, Color.rgb(120, 220, 30,0.4));
-
+	/**
+	 * Changes the position of the card to x, y
+	 * @param x new x coordinate
+	 * @param y new y coordinate
+	 */
 	public void setPos(double x, double y) {
 
 		this.setTranslateX(x);
@@ -24,39 +27,70 @@ public class Card extends Group{
 
 	}
 
+	/**
+	 * 
+	 * @return The value of the color of the card as a number
+	 */
 	public int getColorValue() {
 
 		return COLOUR;
 
 	}
 
+	/**
+	 * 
+	 * @return The name of the color of the card as a String
+	 */
 	public String getColorName() {
 
 		return COLOR;
 
 	}
 
+	/**
+	 * 
+	 * @return The value of the card
+	 */
 	public int getValue() {
 
 		return VALUE;
 
 	}
+	
+	/**
+	 * Flips the card so you only see a grey square instead of the front of the card
+	 */
+	public void flip() {
 
-	public Card(int a, int b) {
-
-		if(game == null) {
-			game = Solitaire.GAME;
+		if (backside.getOpacity() < 0.5 ) {
+			backside.setOpacity(1);
+		}else if (backside.getOpacity() > 0.5) {
+			backside.setOpacity(0);
 		}
 
-		highlight.setOpacity(0);
-		highlight.setArcHeight(10);
-		highlight.setArcWidth(10);
+	}
+
+	/**
+	 * Creates a new card from a color (a) and a value (b)
+	 * @param a the color of the new card
+	 * @param b the value of the new card
+	 */
+	public Card(int a, int b) {
+
+
+		this.getChildren().add(backside);
+		
 		backside.setOpacity(0);
 		backside.setArcHeight(10);
 		backside.setArcWidth(10);
+		
+		this.setOnMouseClicked(event->{
 
+		});
+		
 		COLOUR = a;
 
+		// Limits the values acquired
 		if (a > 4)a = 4;
 		if (a < 1)a = 1;
 		if (b > 13)b = 13;
@@ -64,14 +98,6 @@ public class Card extends Group{
 		this.VALUE = b;
 
 		Text value = new Text(" " + VALUE);
-
-		this.setOnMouseClicked(event->{
-			if (!Solitaire.CARDHL) {
-				game.moveCard(this);
-			}
-
-		});
-
 
 		value.setTranslateX(30);
 		value.setTranslateY(13);
@@ -106,6 +132,7 @@ public class Card extends Group{
 
 		this.getChildren().addAll(background, top, value);
 
+		// This switch case controls the shield of the card
 		switch (a) {
 		case 1:
 			COLOR = "spades";
@@ -215,30 +242,6 @@ public class Card extends Group{
 		default:
 			break;
 		}
-
-		this.getChildren().addAll(backside, highlight);
-
-	}
-
-	public void flip() {
-
-		if (backside.getOpacity() < 0.5 ) {
-			backside.setOpacity(1);
-		}else if (backside.getOpacity() > 0.5) {
-			backside.setOpacity(0);
-		}
-
-	}
-
-	public void highlight() {
-
-			highlight.setOpacity(1);
-
-	}
-	
-	public void deHl() {
-
-			highlight.setOpacity(0);
 
 	}
 
