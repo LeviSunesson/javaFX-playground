@@ -14,8 +14,6 @@ import javafx.stage.Stage;
 
 public class BlackJack extends Application {
 
-	private int WINS = 0;
-	
 	Group startGroup = new Group();
 	static Group root = new Group();
 	Group endGroup = new Group();
@@ -24,24 +22,24 @@ public class BlackJack extends Application {
 	static Scene scene = new Scene(root, 800, 450, Color.WHITE);
 	Scene endScene = new Scene(endGroup, 800, 450, Color.WHITE);
 
-	Player player1 = new Player(50, 50, "PLAYER");
-
-	Dealer dealer = new Dealer(450, 50);
-
-	boolean dealt = false;
-
 	static CardDeck deck = new CardDeck();
-
-	public static boolean dealerT = false;
 
 	Stage stage;
 	AnimationTimer AT;
+
+	Player player1 = new Player(50, 50, "PLAYER");
+	Dealer dealer = new Dealer(450, 50);
+
+	boolean dealt = false;
+	public static boolean dealerT = false;
+
+	private int WINS = 0;
 
 	@Override
 	public void start(Stage arg0) throws Exception {
 
 		//Basic setup
-		
+
 		stage = arg0;
 
 		player1.deactivateHit();
@@ -50,7 +48,7 @@ public class BlackJack extends Application {
 		startScene();
 
 		mainScene();
-		
+
 		stage.setScene(startScene);
 		stage.show();
 		stage.setTitle("BlackJack");
@@ -82,7 +80,7 @@ public class BlackJack extends Application {
 		//If button is pressed the deal cards and start game
 		dealButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
-				
+
 				if (!dealt) {
 
 					player1.activateHit();
@@ -95,12 +93,13 @@ public class BlackJack extends Application {
 					dealer.hit(deck.draw());
 
 					dealt = true;
-					
+
 					AT.start();
 				}
 
 			}
 		});
+
 
 		root.getChildren().addAll(player1, dealer, dealButton);
 
@@ -109,17 +108,17 @@ public class BlackJack extends Application {
 			@Override
 			public void handle(long arg0) {
 
+				player1.update();
+				dealer.update();
+				
 				if (dealerT || player1.getScore() >= 21) {
 					dealerTurn();
 				}
 
-				player1.update();
-				dealer.update();
-
 			}
 
 		};
-
+		
 		AT.start();
 
 	}
@@ -135,6 +134,13 @@ public class BlackJack extends Application {
 			checkWin(player1, dealer);
 		}else if (dealer.getScore() < 17) {
 			dealer.hit(deck.draw());
+			
+			try {
+				Thread.sleep(750);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
 		}else if (dealer.getScore() > 16) {
 			checkWin(player1, dealer);
 		}
@@ -162,7 +168,7 @@ public class BlackJack extends Application {
 		totWins.setFont(new Font(100));
 		totWins.setTranslateX(scene.getWidth()/2 - totWins.getLayoutBounds().getWidth()/2);
 		totWins.setTranslateY(200);
-		
+
 		//Text and styling for who won
 		Text winnerText = new Text(winner.getName() + " WON!");
 		winnerText.setFont(new Font(100));
@@ -171,10 +177,11 @@ public class BlackJack extends Application {
 
 		//Play again button, and styling
 		Button playAgain = new Button("PLAY AGAIN");
-		playAgain.setTranslateX(300);
+		playAgain.setTranslateX(200);
 		playAgain.setTranslateY(300);
-		playAgain.setMinWidth(200);
+		playAgain.setMinWidth(400);
 		playAgain.setMinHeight(100);
+		playAgain.setMaxWidth(400);
 		playAgain.setStyle(
 				"-fx-background-color: rgba(0, 0, 0, 0.5);"
 						+ "-fx-text-fill: black;"
@@ -197,7 +204,7 @@ public class BlackJack extends Application {
 
 
 	}
-	
+
 	/**
 	 * Sets up the start scene of the game
 	 */
@@ -205,14 +212,14 @@ public class BlackJack extends Application {
 
 		//Text and styling
 		Text welcomeText = new Text("Welcome to blackJack!");
-		welcomeText.setTranslateX(0);
-		welcomeText.setTranslateY(100);
 		welcomeText.setFont(new Font(50));
+		welcomeText.setTranslateX(startScene.getWidth()/2 - welcomeText.getLayoutBounds().getWidth()/2);
+		welcomeText.setTranslateY(100);
 
 		//Button and styling
 		Button startButton = new Button("START");
 		startButton.setTranslateX(300);
-		startButton.setTranslateY(300);
+		startButton.setTranslateY(200);
 		startButton.setMinWidth(200);
 		startButton.setMinHeight(100);
 		startButton.setStyle(
@@ -237,7 +244,7 @@ public class BlackJack extends Application {
 
 
 	}
-	
+
 	/**
 	 * Checks who won the game based on a series of rules
 	 * @param player The player of the game
@@ -268,7 +275,7 @@ public class BlackJack extends Application {
 		}else {
 
 			Player tie = new Player("NO ONE");
-			
+
 			Winner(tie);
 
 		}
@@ -285,7 +292,7 @@ public class BlackJack extends Application {
 		dealer.reset();		
 
 		deck.shuffle();
-		
+
 		dealt = false;
 		dealerT = false;
 
@@ -296,25 +303,25 @@ public class BlackJack extends Application {
 	 * @param winner The player who won
 	 */
 	private void Winner(Player winner) {
-		
+
 		// If the player won the score goes up
 		if (winner.getName().equals("PLAYER")) {
 			WINS++;
 		}
-		
-		// Wait for 0.75 sec
+
+		// Wait for 0.75 seconds
 		try {
 			Thread.sleep(750);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		//Stop the game and proceed to the end
 		AT.stop();
 		endScene(winner);
 		stage.setScene(endScene);
-		
-		
+
+
 	}
 
 	public static void main(String[] args) {
