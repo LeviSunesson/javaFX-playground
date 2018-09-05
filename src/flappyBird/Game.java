@@ -24,6 +24,9 @@ public class Game extends Application{
 		ground.setFill(Color.GREEN);
 		root.getChildren().add(ground);
 		
+		setup();
+		pipeHandler();
+		
 		primaryStage.setScene(mainScene);
 		primaryStage.show();
 		primaryStage.setTitle("Flappy Bird");
@@ -35,7 +38,9 @@ public class Game extends Application{
 
 	private void pipeHandler() {
 		
-		
+		for (Pipe pipe : pipes) {
+			pipe.setTranslateY((int) (Math.random()*200) + 200);
+		}
 		
 		
 		
@@ -45,12 +50,12 @@ public class Game extends Application{
 		
 		for (int i = 0; i < 10; i++) {
 			
-			pipes.add(new Pipe(i*200,0));
+			pipes.add( new Pipe( i * 200, 0 ) );
 			
 		}
 		
 		for (Pipe pipe : pipes) {
-			root.getChildren().add(pipe);
+			root.getChildren().add( pipe );
 		}
 		
 	}
